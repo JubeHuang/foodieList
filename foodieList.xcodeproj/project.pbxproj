@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D31114E296C0959006230D2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D31114D296C0959006230D2 /* DetailViewController.swift */; };
 		8D363AC7296802E500638F6A /* CheckdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363AC6296802E500638F6A /* CheckdTableViewCell.swift */; };
 		8D363AC9296802F200638F6A /* WishTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363AC8296802F200638F6A /* WishTableViewCell.swift */; };
 		8D363ACB29681CDD00638F6A /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363ACA29681CDD00638F6A /* EditViewController.swift */; };
-		8D5D1FD029695A4200EF3986 /* EditInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5D1FCF29695A4200EF3986 /* EditInfoTableViewCell.swift */; };
-		8D5D1FD229697D9900EF3986 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5D1FD129697D9900EF3986 /* InfoTableViewController.swift */; };
 		8DDB82512966EABE0038B1EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDB82502966EABE0038B1EC /* AppDelegate.swift */; };
 		8DDB82532966EABF0038B1EC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDB82522966EABF0038B1EC /* SceneDelegate.swift */; };
 		8DDB82582966EABF0038B1EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DDB82562966EABF0038B1EC /* Main.storyboard */; };
@@ -22,11 +21,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D31114D296C0959006230D2 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8D363AC6296802E500638F6A /* CheckdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckdTableViewCell.swift; sourceTree = "<group>"; };
 		8D363AC8296802F200638F6A /* WishTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishTableViewCell.swift; sourceTree = "<group>"; };
 		8D363ACA29681CDD00638F6A /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
-		8D5D1FCF29695A4200EF3986 /* EditInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInfoTableViewCell.swift; sourceTree = "<group>"; };
-		8D5D1FD129697D9900EF3986 /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		8DDB824D2966EABE0038B1EC /* foodieList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = foodieList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DDB82502966EABE0038B1EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DDB82522966EABF0038B1EC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,13 +66,12 @@
 		8DDB824F2966EABE0038B1EC /* foodieList */ = {
 			isa = PBXGroup;
 			children = (
-				8D5D1FCF29695A4200EF3986 /* EditInfoTableViewCell.swift */,
+				8D31114D296C0959006230D2 /* DetailViewController.swift */,
 				8D363ACA29681CDD00638F6A /* EditViewController.swift */,
 				8DDB826A2967C7910038B1EC /* Info.swift */,
 				8DDB82502966EABE0038B1EC /* AppDelegate.swift */,
 				8DDB82522966EABF0038B1EC /* SceneDelegate.swift */,
 				8DDB82562966EABF0038B1EC /* Main.storyboard */,
-				8D5D1FD129697D9900EF3986 /* InfoTableViewController.swift */,
 				8D363AC6296802E500638F6A /* CheckdTableViewCell.swift */,
 				8D363AC8296802F200638F6A /* WishTableViewCell.swift */,
 				8DDB82642966EB460038B1EC /* ListViewController.swift */,
@@ -159,12 +156,11 @@
 				8D363AC9296802F200638F6A /* WishTableViewCell.swift in Sources */,
 				8DDB82512966EABE0038B1EC /* AppDelegate.swift in Sources */,
 				8D363AC7296802E500638F6A /* CheckdTableViewCell.swift in Sources */,
-				8D5D1FD229697D9900EF3986 /* InfoTableViewController.swift in Sources */,
-				8D5D1FD029695A4200EF3986 /* EditInfoTableViewCell.swift in Sources */,
 				8DDB82532966EABF0038B1EC /* SceneDelegate.swift in Sources */,
 				8DDB826B2967C7910038B1EC /* Info.swift in Sources */,
 				8DDB82652966EB460038B1EC /* ListViewController.swift in Sources */,
 				8D363ACB29681CDD00638F6A /* EditViewController.swift in Sources */,
+				8D31114E296C0959006230D2 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

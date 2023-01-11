@@ -11,12 +11,12 @@ class ListViewController: UIViewController {
 
     var unCheckedLists = [Info]() {
         didSet{
-            Info.saveInfo(Infos: unCheckedLists)
+            Info.saveUnCheckedInfo(infos: unCheckedLists)
         }
     }
     var checkedLists = [Info]() {
         didSet{
-            Info.saveInfo(Infos: checkedLists)
+            Info.saveCheckedInfo(Infos: checkedLists)
         }
     }
     
@@ -29,19 +29,21 @@ class ListViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         wishBgStyle(height: 337, cornerRadius: 28)
-        
+        if let unCheckedLists = Info.loadUnCheckedInfo(),
+           let checkedLists = Info.loadCheckedInfo() {
+            self.unCheckedLists = unCheckedLists
+            self.checkedLists = checkedLists
+        }
     }
     
     @IBAction func unCheckList(_ sender: UIButton) {
         let point = sender.convert(CGPoint.zero, to: checkedListTableView)
         if let indexPath = checkedListTableView.indexPathForRow(at: point){
             checkedLists[indexPath.row].checked = false
-            print(checkedLists, "before")
             let removeList = checkedLists.remove(at: indexPath.row)
             unCheckedLists.insert(removeList, at: 0)
             checkedListTableView.reloadData()
             wishListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .right)
-            print(checkedLists, "after")
         }
     }
     
@@ -49,13 +51,13 @@ class ListViewController: UIViewController {
         let point = sender.convert(CGPoint.zero, to: wishListTableView)
         if let indexPath = wishListTableView.indexPathForRow(at: point){
             unCheckedLists[indexPath.row].checked = true
-            print(unCheckedLists[indexPath.row].btnImageName)
             let removedList = unCheckedLists.remove(at: indexPath.row)
             checkedLists.insert(removedList, at: 0)
             wishListTableView.reloadData()
             checkedListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
         }
     }
+    
     func wishBgStyle(height: CGFloat, cornerRadius: CGFloat){
         
         let wishBgLayer = CAShapeLayer()
@@ -67,7 +69,6 @@ class ListViewController: UIViewController {
         wishBgPath.addLine(to: CGPoint(x: view.bounds.width, y: view.bounds.height))
         wishBgLayer.path = wishBgPath.cgPath
         wishBgLayer.fillColor = CGColor(gray: 1, alpha: 1)
-        
         wishBgLayer.shadowColor = CGColor(red: 20/255, green: 62/255, blue: 40/255, alpha: 1)
         wishBgLayer.shadowOpacity = 0.25
         wishBgLayer.shadowRadius = 36
@@ -77,19 +78,52 @@ class ListViewController: UIViewController {
     
     @IBAction func unwindToListViewController(_ unwindSegue: UIStoryboardSegue) {
         
-        // Use data from the view controller which initiated the unwind segue
         if let sourceViewController = unwindSegue.source as? EditViewController,
            let newRestaurant = sourceViewController.newRestaurant {
+            
             if newRestaurant.checked {
-                checkedLists.insert(newRestaurant, at: 0)
-                checkedListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                //未去過編輯後為已去過
+                if let indexPath = wishListTableView.indexPathForSelectedRow{
+                    checkedLists.insert(newRestaurant, at: 0)
+                    checkedListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                    unCheckedLists.remove(at: indexPath.row)
+                    wishListTableView.deleteRows(at: [indexPath], with: .automatic)
+                //已去過編輯後更新已去過
+                } else if let indexPath = checkedListTableView.indexPathForSelectedRow {
+                    checkedLists[indexPath.row] = newRestaurant
+                    checkedListTableView.reloadRows(at: [indexPath], with: .automatic)
+                } else {
+                // 新增已去過
+                    checkedLists.insert(newRestaurant, at: 0)
+                    checkedListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                }
             } else {
-                unCheckedLists.insert(newRestaurant, at: 0)
-                wishListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                //未去過編輯後更新未去過
+                if let indexPath = wishListTableView.indexPathForSelectedRow{
+                    unCheckedLists[indexPath.row] = newRestaurant
+                    wishListTableView.reloadRows(at: [indexPath], with: .automatic)
+                } else {
+                //新增未去過
+                    unCheckedLists.insert(newRestaurant, at: 0)
+                    wishListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                }
             }
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        
+        if segue.identifier == "wishCellToEdit" {
+            if let row = wishListTableView.indexPathForSelectedRow?.row,
+               let destinationC = segue.destination as? EditViewController {
+                destinationC.newRestaurant = unCheckedLists[row]
+            }
+        } else if segue.identifier == "checkCellToView" {
+            if let destinationC = segue.destination as? DetailViewController,
+                let row = checkedListTableView.indexPathForSelectedRow?.row {
+                destinationC.restaurant = checkedLists[row]
+            }
+        }
     }
 
     /*
@@ -104,7 +138,7 @@ class ListViewController: UIViewController {
 
 }
 
-extension ListViewController: UITableViewDataSource{
+extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView {
         case self.wishListTableView:
@@ -114,7 +148,6 @@ extension ListViewController: UITableViewDataSource{
         default:
             return 0
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,20 +158,13 @@ extension ListViewController: UITableViewDataSource{
                 cell.unCheckBtn.configuration?.image = UIImage(named: unCheckedLists[indexPath.row].btnImageName)
                 return cell
             }
-                        
         case self.checkedListTableView:
             if let cell = tableView.dequeueReusableCell(withIdentifier: "\(CheckdTableViewCell.self)", for: indexPath) as? CheckdTableViewCell {
                 cell.checkedNameLabel.text = checkedLists[indexPath.row].name
                 cell.checkBtn.configuration?.image = UIImage(named: checkedLists[indexPath.row].btnImageName)
-                if checkedLists[indexPath.row].comment.isEmpty {
-                    cell.commentLabel.text = Info.unComment
-                } else {
-                    cell.commentLabel.text = checkedLists[indexPath.row].comment
-                }
+                cell.commentLabel.text = checkedLists[indexPath.row].comment
                 return cell
             }
-            
-        
         default:
             break
         }
@@ -157,10 +183,4 @@ extension ListViewController: UITableViewDataSource{
             break
         }
     }
-}
-
-
-
-extension ListViewController: UITableViewDelegate {
-    
 }
