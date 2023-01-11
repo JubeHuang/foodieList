@@ -60,5 +60,4 @@ struct Info: Codable {
         let data = try? encoder.encode(infos)
         try? data?.write(to: url)
     }
-    
 }

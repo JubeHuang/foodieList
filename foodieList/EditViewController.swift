@@ -26,6 +26,10 @@ class EditViewController: UIViewController {
         updateUI()
     }
     
+    @IBAction func tapToCloseKeyboard(_ sender: Any) {
+        view.endEditing(true)
+    }
+    
     @IBAction func addPhoto(_ sender: Any) {
         
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

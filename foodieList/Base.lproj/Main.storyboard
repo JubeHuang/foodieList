@@ -448,6 +448,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="scp-Qi-8Hw"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="auY-Ya-mgZ" firstAttribute="leading" secondItem="scp-Qi-8Hw" secondAttribute="leading" constant="16" id="0Cc-Fz-7kl"/>
                             <constraint firstItem="scp-Qi-8Hw" firstAttribute="trailing" secondItem="lFP-wt-Jpc" secondAttribute="trailing" constant="16" id="0Nl-j2-Nse"/>
@@ -471,6 +472,9 @@
                             <constraint firstItem="blf-zL-UUs" firstAttribute="top" secondItem="2Jd-Sb-CTe" secondAttribute="bottom" constant="12" id="hlm-fK-EUP"/>
                             <constraint firstItem="asL-e8-kwf" firstAttribute="top" secondItem="scp-Qi-8Hw" secondAttribute="top" constant="20" id="lJI-DA-qpM"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="3Bo-ag-j06" appends="YES" id="dUS-AZ-606"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="新增餐廳" id="tF8-DI-nAn">
                         <barButtonItem key="rightBarButtonItem" title="完成" style="plain" id="8UC-Vu-TEl">
@@ -492,6 +496,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8B-hO-d5Q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="EtY-ia-Ptv" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="3Bo-ag-j06">
+                    <connections>
+                        <action selector="tapToCloseKeyboard:" destination="1uP-SM-Qgd" id="96S-Dc-7c0"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2804" y="321"/>
         </scene>

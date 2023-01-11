@@ -66,7 +66,6 @@ class DetailViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationC = segue.destination as? EditViewController
         destinationC?.newRestaurant = restaurant
-        print(destinationC?.newRestaurant, "toEdit")
     }
 
 }
