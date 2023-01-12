@@ -47,6 +47,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D712AE429706947001A9E68 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8DDB82642966EB460038B1EC /* ListViewController.swift */,
+				8D363ACA29681CDD00638F6A /* EditViewController.swift */,
+				8D31114D296C0959006230D2 /* DetailViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8D712AE529706972001A9E68 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8D363AC6296802E500638F6A /* CheckdTableViewCell.swift */,
+				8D363AC8296802F200638F6A /* WishTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8D712AE629706981001A9E68 /* Method */ = {
+			isa = PBXGroup;
+			children = (
+				8DDB826A2967C7910038B1EC /* Info.swift */,
+			);
+			path = Method;
+			sourceTree = "<group>";
+		};
 		8DDB82442966EABE0038B1EC = {
 			isa = PBXGroup;
 			children = (
@@ -66,15 +93,12 @@
 		8DDB824F2966EABE0038B1EC /* foodieList */ = {
 			isa = PBXGroup;
 			children = (
-				8D31114D296C0959006230D2 /* DetailViewController.swift */,
-				8D363ACA29681CDD00638F6A /* EditViewController.swift */,
-				8DDB826A2967C7910038B1EC /* Info.swift */,
+				8D712AE629706981001A9E68 /* Method */,
+				8D712AE529706972001A9E68 /* View */,
+				8D712AE429706947001A9E68 /* Controller */,
 				8DDB82502966EABE0038B1EC /* AppDelegate.swift */,
 				8DDB82522966EABF0038B1EC /* SceneDelegate.swift */,
 				8DDB82562966EABF0038B1EC /* Main.storyboard */,
-				8D363AC6296802E500638F6A /* CheckdTableViewCell.swift */,
-				8D363AC8296802F200638F6A /* WishTableViewCell.swift */,
-				8DDB82642966EB460038B1EC /* ListViewController.swift */,
 				8DDB82592966EAC00038B1EC /* Assets.xcassets */,
 				8DDB825B2966EAC00038B1EC /* LaunchScreen.storyboard */,
 				8DDB825E2966EAC00038B1EC /* Info.plist */,

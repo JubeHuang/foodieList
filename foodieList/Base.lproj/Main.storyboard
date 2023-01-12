@@ -65,14 +65,14 @@
                                                     <rect key="frame" x="32" y="12" width="289" height="47"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2zP-rI-mc8">
-                                                            <rect key="frame" x="0.0" y="0.0" width="289" height="26"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="514" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZUN-eH-MvA">
-                                                            <rect key="frame" x="0.0" y="30" width="289" height="17"/>
+                                                            <rect key="frame" x="0.0" y="30" width="514" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" name="grey"/>
@@ -714,7 +714,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="fuE-A9-gfU"/>
+        <segue reference="ef4-X0-kMW"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="add" width="16" height="16"/>
