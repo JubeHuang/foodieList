@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol EditViewControllerDelegate {
+    func editViewControllerDelegate(_ controller: EditViewController, didEditRestaurant restaurant: Info )
+}
+
 class EditViewController: UIViewController {
     
     @IBOutlet weak var addPhotoBtn: UIButton!
@@ -17,6 +21,7 @@ class EditViewController: UIViewController {
     @IBOutlet weak var addressTextfield: UITextField!
     @IBOutlet weak var nameEditLabel: UITextField!
     
+    var delegate: EditViewControllerDelegate?
     var newRestaurant: Info?
     var hasPhoto = false
     
@@ -28,6 +33,45 @@ class EditViewController: UIViewController {
     
     @IBAction func tapToCloseKeyboard(_ sender: Any) {
         view.endEditing(true)
+    }
+    
+    @IBAction func done(_ sender: UIBarButtonItem) {
+        let name = nameEditLabel.text!
+        let address = addressTextfield.text ?? ""
+        let phone = phoneTextfield.text ?? ""
+        let url = urlTextfield.text ?? ""
+        let comment = commentTextview.text ?? Info.unComment
+        let caption = captionTextfield.text ?? ""
+        var imageName: String?
+        
+        if nameEditLabel.text == "" {
+            editAlert()
+        }
+        
+        if hasPhoto {
+            //有照片進到編輯
+            if let restaurant = newRestaurant {
+                imageName = restaurant.imageName
+            }
+            //剛新增照片 || 原本沒照片後來增加
+            if imageName == "" || imageName == nil {
+                imageName = UUID().uuidString
+            }
+            //將照片轉成data儲存
+            let imageData = addPhotoBtn.configuration?.background.image?.jpegData(compressionQuality: 0.9)
+            let imageUrl = Info.documentDirectoryChecked.appendingPathComponent(imageName!).appendingPathExtension("jpg")
+            try? imageData?.write(to: imageUrl)
+            newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName!, comment: comment, checked: true)
+            //delegate?.editViewControllerDelegate(self, didEditRestaurant: newRestaurant!)
+        } else if comment != "有什麼想法呢..." {
+            newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName ?? "", comment: comment, checked: true)
+            //delegate?.editViewControllerDelegate(self, didEditRestaurant: newRestaurant!)
+        } else {
+            newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName ?? "", comment: comment, checked: false)
+            //delegate?.editViewControllerDelegate(self, didEditRestaurant: newRestaurant!)
+        }
+        delegate?.editViewControllerDelegate(self, didEditRestaurant: newRestaurant!)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func addPhoto(_ sender: Any) {
@@ -87,14 +131,14 @@ class EditViewController: UIViewController {
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if nameEditLabel.text == "" {
@@ -105,36 +149,37 @@ class EditViewController: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        let name = nameEditLabel.text!
-        let address = addressTextfield.text ?? ""
-        let phone = phoneTextfield.text ?? ""
-        let url = urlTextfield.text ?? ""
-        let comment = commentTextview.text ?? Info.unComment
-        let caption = captionTextfield.text ?? ""
-        var imageName: String?
-        
-        if hasPhoto {
-            //有照片進到編輯
-            if let restaurant = newRestaurant {
-                imageName = restaurant.imageName
-            }
-            //剛新增照片 || 原本沒照片後來增加
-            if imageName == "" || imageName == nil {
-                imageName = UUID().uuidString
-            }
-            //將照片轉成data儲存
-            let imageData = addPhotoBtn.configuration?.background.image?.jpegData(compressionQuality: 0.9)
-            let imageUrl = Info.documentDirectoryChecked.appendingPathComponent(imageName!).appendingPathExtension("jpg")
-            try? imageData?.write(to: imageUrl)
-            newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName!, comment: comment, checked: true)
-        } else if comment != "有什麼想法呢..." {
-            newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName ?? "", comment: comment, checked: true)
-        } else {
-            newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName ?? "", comment: comment, checked: false)
-        }
-    }
+    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //
+    //        let name = nameEditLabel.text!
+    //        let address = addressTextfield.text ?? ""
+    //        let phone = phoneTextfield.text ?? ""
+    //        let url = urlTextfield.text ?? ""
+    //        let comment = commentTextview.text ?? Info.unComment
+    //        let caption = captionTextfield.text ?? ""
+    //        var imageName: String?
+    //
+    //        if hasPhoto {
+    //            //有照片進到編輯
+    //            if let restaurant = newRestaurant {
+    //                imageName = restaurant.imageName
+    //            }
+    //            //剛新增照片 || 原本沒照片後來增加
+    //            if imageName == "" || imageName == nil {
+    //                imageName = UUID().uuidString
+    //            }
+    //            //將照片轉成data儲存
+    //            let imageData = addPhotoBtn.configuration?.background.image?.jpegData(compressionQuality: 0.9)
+    //            let imageUrl = Info.documentDirectoryChecked.appendingPathComponent(imageName!).appendingPathExtension("jpg")
+    //            try? imageData?.write(to: imageUrl)
+    //            newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName!, comment: comment, checked: true)
+    //        } else if comment != "有什麼想法呢..." {
+    //            newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName ?? "", comment: comment, checked: true)
+    //        } else {
+    //            newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName ?? "", comment: comment, checked: false)
+    //        }
+    //        delegate?.editViewControllerDelegate(self, didEditRestaurant: newRestaurant!)
+    //    }
 }
 
 extension EditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

@@ -31,7 +31,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="add"/>
                                         <connections>
-                                            <segue destination="1uP-SM-Qgd" kind="show" id="Ayu-ov-kru"/>
+                                            <segue destination="1uP-SM-Qgd" kind="show" destinationCreationSelector="addNew:" id="Ayu-ov-kru"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -65,14 +65,14 @@
                                                     <rect key="frame" x="32" y="12" width="289" height="47"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2zP-rI-mc8">
-                                                            <rect key="frame" x="0.0" y="0.0" width="514" height="26"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="289" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZUN-eH-MvA">
-                                                            <rect key="frame" x="0.0" y="30" width="514" height="17"/>
+                                                            <rect key="frame" x="0.0" y="30" width="289" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" name="grey"/>
@@ -480,7 +480,7 @@
                         <barButtonItem key="rightBarButtonItem" title="完成" style="plain" id="8UC-Vu-TEl">
                             <color key="tintColor" red="0.61176470588235299" green="0.26666666666666666" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
-                                <segue destination="EtY-ia-Ptv" kind="unwind" identifier="backToMain" unwindAction="unwindToListViewController:" id="bh0-RH-Lm1"/>
+                                <action selector="done:" destination="1uP-SM-Qgd" id="zAo-I2-zTR"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -495,7 +495,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8B-hO-d5Q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="EtY-ia-Ptv" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="3Bo-ag-j06">
                     <connections>
                         <action selector="tapToCloseKeyboard:" destination="1uP-SM-Qgd" id="96S-Dc-7c0"/>
@@ -714,7 +713,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ef4-X0-kMW"/>
+        <segue reference="fuE-A9-gfU"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="add" width="16" height="16"/>

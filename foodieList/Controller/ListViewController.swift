@@ -8,7 +8,7 @@
 import UIKit
 
 class ListViewController: UIViewController {
-
+    
     var unCheckedLists = [Info]() {
         didSet{
             Info.saveUnCheckedInfo(infos: unCheckedLists)
@@ -26,7 +26,7 @@ class ListViewController: UIViewController {
     @IBOutlet weak var checkedListTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         wishBgStyle(height: 337, cornerRadius: 28)
         if let unCheckedLists = Info.loadUnCheckedInfo(),
@@ -76,39 +76,43 @@ class ListViewController: UIViewController {
         view.layer.insertSublayer(wishBgLayer, at: 0)
     }
     
-    @IBAction func unwindToListViewController(_ unwindSegue: UIStoryboardSegue) {
-        
-        if let sourceViewController = unwindSegue.source as? EditViewController,
-           let newRestaurant = sourceViewController.newRestaurant {
-            
-            if newRestaurant.checked {
-                //未去過編輯後為已去過
-                if let indexPath = wishListTableView.indexPathForSelectedRow{
-                    checkedLists.insert(newRestaurant, at: 0)
-                    checkedListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-                    unCheckedLists.remove(at: indexPath.row)
-                    wishListTableView.deleteRows(at: [indexPath], with: .automatic)
-                //已去過編輯後更新已去過
-                } else if let indexPath = checkedListTableView.indexPathForSelectedRow {
-                    checkedLists[indexPath.row] = newRestaurant
-                    checkedListTableView.reloadRows(at: [indexPath], with: .automatic)
-                } else {
-                // 新增已去過
-                    checkedLists.insert(newRestaurant, at: 0)
-                    checkedListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-                }
-            } else {
-                //未去過編輯後更新未去過
-                if let indexPath = wishListTableView.indexPathForSelectedRow{
-                    unCheckedLists[indexPath.row] = newRestaurant
-                    wishListTableView.reloadRows(at: [indexPath], with: .automatic)
-                } else {
-                //新增未去過
-                    unCheckedLists.insert(newRestaurant, at: 0)
-                    wishListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-                }
-            }
-        }
+//    @IBAction func unwindToListViewController(_ unwindSegue: UIStoryboardSegue) {
+//        
+//        if let sourceViewController = unwindSegue.source as? EditViewController,
+//           let newRestaurant = sourceViewController.newRestaurant {
+//            if newRestaurant.checked {
+//                //未去過編輯後為已去過
+//                if let indexPath = wishListTableView.indexPathForSelectedRow{
+//                    checkedLists.insert(newRestaurant, at: 0)
+//                    checkedListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+//                    unCheckedLists.remove(at: indexPath.row)
+//                    wishListTableView.deleteRows(at: [indexPath], with: .automatic)
+//                    //已去過編輯後更新已去過
+//                } else if let indexPath = checkedListTableView.indexPathForSelectedRow {
+//                    checkedLists[indexPath.row] = newRestaurant
+//                    checkedListTableView.reloadRows(at: [indexPath], with: .automatic)
+//                } else {
+//                    // 新增已去過
+//                    checkedLists.insert(newRestaurant, at: 0)
+//                    checkedListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+//                }
+//            } else {
+//                //未去過編輯後更新未去過
+//                if let indexPath = wishListTableView.indexPathForSelectedRow{
+//                    unCheckedLists[indexPath.row] = newRestaurant
+//                    wishListTableView.reloadRows(at: [indexPath], with: .automatic)
+//                } else {
+//                    //新增未去過
+//                    unCheckedLists.insert(newRestaurant, at: 0)
+//                    wishListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+//                }
+//            }
+//        }
+//    }
+    @IBSegueAction func addNew(_ coder: NSCoder) -> EditViewController? {
+        let controller = EditViewController(coder: coder)
+        controller?.delegate = self
+        return controller
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -116,26 +120,30 @@ class ListViewController: UIViewController {
         if segue.identifier == "wishCellToEdit" {
             if let row = wishListTableView.indexPathForSelectedRow?.row,
                let destinationC = segue.destination as? EditViewController {
+                destinationC.delegate = self
                 destinationC.newRestaurant = unCheckedLists[row]
             }
         } else if segue.identifier == "checkCellToView" {
             if let destinationC = segue.destination as? DetailViewController,
-                let row = checkedListTableView.indexPathForSelectedRow?.row {
+               let row = checkedListTableView.indexPathForSelectedRow?.row,
+               let indexPath = checkedListTableView.indexPathForSelectedRow {
+                destinationC.delegate = self
                 destinationC.restaurant = checkedLists[row]
+                destinationC.indexPath = indexPath
             }
         }
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 extension ListViewController: UITableViewDataSource, UITableViewDelegate {
@@ -181,6 +189,43 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
             checkedListTableView.deleteRows(at: [indexPath], with: .automatic)
         default:
             break
+        }
+    }
+}
+
+extension ListViewController: EditViewControllerDelegate, DetailViewControllerDelegate {
+    func detailViewControllerDelegate(_ controller: DetailViewController, didSelect restaurant: Info, didSelect indexPath: IndexPath) {
+        checkedLists[indexPath.row] = restaurant
+        checkedListTableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    func editViewControllerDelegate(_ controller: EditViewController, didEditRestaurant restaurant: Info) {
+        
+        if restaurant.checked {
+            //未去過編輯後為已去過
+            if let indexPath = wishListTableView.indexPathForSelectedRow{
+                checkedLists.insert(restaurant, at: 0)
+                checkedListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                unCheckedLists.remove(at: indexPath.row)
+                wishListTableView.deleteRows(at: [indexPath], with: .automatic)
+            } else if let indexPath = checkedListTableView.indexPathForSelectedRow {
+                checkedLists[indexPath.row] = restaurant
+                checkedListTableView.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+                // 新增已去過
+                checkedLists.insert(restaurant, at: 0)
+                checkedListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            }
+        } else {
+            //未去過編輯後更新未去過
+            if let indexPath = wishListTableView.indexPathForSelectedRow{
+                unCheckedLists[indexPath.row] = restaurant
+                wishListTableView.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+                //新增未去過
+                unCheckedLists.insert(restaurant, at: 0)
+                wishListTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            }
         }
     }
 }

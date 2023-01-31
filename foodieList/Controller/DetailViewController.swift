@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol DetailViewControllerDelegate: AnyObject {
+    func detailViewControllerDelegate(_ controller: DetailViewController, didSelect restaurant: Info, didSelect indexPath: IndexPath)
+}
+
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var captionLabel: UILabel!
@@ -18,10 +22,10 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var restaurantImage: UIImageView!
     
     var restaurant: Info?
+    weak var delegate: DetailViewControllerDelegate?
+    var indexPath: IndexPath?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    override func viewWillAppear(_ animated: Bool) {
         updateUI()
     }
     
@@ -29,7 +33,7 @@ class DetailViewController: UIViewController {
         if let restaurant = restaurant {
             nameLabel.text = restaurant.name
             addressLabel.text = restaurant.address
-            print(restaurant.imageName)
+            //print(restaurant.imageName)
             if restaurant.imageName.isEmpty {
                 restaurantImage.image = UIImage(named: "defaultImage")
             } else {
@@ -50,6 +54,8 @@ class DetailViewController: UIViewController {
             UIColor(red: 246/255, green: 246/255, blue: 242/255, alpha: 0.4).cgColor,
             UIColor(red: 246/255, green: 246/255, blue: 242/255, alpha: 0).cgColor ]
         restaurantImage.layer.insertSublayer(gradientLayer, at: 0)
+        guard let restaurant = restaurant, let indexPath = indexPath else { return }
+        delegate?.detailViewControllerDelegate(self, didSelect: restaurant, didSelect: indexPath)
     }
     
 
@@ -65,7 +71,15 @@ class DetailViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationC = segue.destination as? EditViewController
+        destinationC?.delegate = self
         destinationC?.newRestaurant = restaurant
     }
 
+}
+
+extension DetailViewController: EditViewControllerDelegate {
+    func editViewControllerDelegate(_ controller: EditViewController, didEditRestaurant restaurant: Info) {
+        self.restaurant = restaurant
+        print("畫面呈現\(self.restaurant)", "delegate傳送\(restaurant)")
+    }
 }
