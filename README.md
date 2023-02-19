@@ -1,4 +1,7 @@
 # 美食口袋名單紀錄App
+[![swift-version](https://img.shields.io/badge/swift-5.5-brightgreen.svg)](https://github.com/apple/swift)
+[![xcode-version](https://img.shields.io/badge/xcode-14.2-brightgreen)](https://developer.apple.com/xcode/)
+
 <img src="https://github.com/JubeHuang/foodieList/blob/main/foodCover.webp" width="600">
 
 ### 相關技術
