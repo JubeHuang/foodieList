@@ -15,4 +15,7 @@
 * 紀錄餐廳基本資訊、心得與照片
 * 勾選已去過餐廳
 
+<p float:"left">
+<img src="https://github.com/JubeHuang/foodieList/blob/main/main.webp" width="300">
 <img src="https://github.com/JubeHuang/foodieList/blob/main/flow.gif" width="300">
+</p>
