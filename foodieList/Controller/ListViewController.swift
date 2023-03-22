@@ -17,6 +17,7 @@ class ListViewController: UIViewController {
     var checkedLists = [Info]() {
         didSet{
             Info.saveCheckedInfo(Infos: checkedLists)
+            print("save")
         }
     }
     
@@ -29,9 +30,11 @@ class ListViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         wishBgStyle(height: 337, cornerRadius: 28)
-        if let unCheckedLists = Info.loadUnCheckedInfo(),
-           let checkedLists = Info.loadCheckedInfo() {
+        if let unCheckedLists = Info.loadUnCheckedInfo(){
             self.unCheckedLists = unCheckedLists
+            
+        }
+        if let checkedLists = Info.loadCheckedInfo() {
             self.checkedLists = checkedLists
         }
     }
@@ -128,7 +131,7 @@ class ListViewController: UIViewController {
                let row = checkedListTableView.indexPathForSelectedRow?.row,
                let indexPath = checkedListTableView.indexPathForSelectedRow {
                 destinationC.delegate = self
-                destinationC.restaurant = checkedLists[row]
+                destinationC.viewModel.restaurant = checkedLists[row]
                 destinationC.indexPath = indexPath
             }
         }

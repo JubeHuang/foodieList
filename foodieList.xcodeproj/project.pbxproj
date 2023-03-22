@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8D31114E296C0959006230D2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D31114D296C0959006230D2 /* DetailViewController.swift */; };
+		8D35EF2B29CB01C80059198F /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D35EF2A29CB01C80059198F /* DetailViewModel.swift */; };
 		8D363AC7296802E500638F6A /* CheckdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363AC6296802E500638F6A /* CheckdTableViewCell.swift */; };
 		8D363AC9296802F200638F6A /* WishTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363AC8296802F200638F6A /* WishTableViewCell.swift */; };
 		8D363ACB29681CDD00638F6A /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363ACA29681CDD00638F6A /* EditViewController.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		8D31114D296C0959006230D2 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		8D35EF2A29CB01C80059198F /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		8D363AC6296802E500638F6A /* CheckdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckdTableViewCell.swift; sourceTree = "<group>"; };
 		8D363AC8296802F200638F6A /* WishTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishTableViewCell.swift; sourceTree = "<group>"; };
 		8D363ACA29681CDD00638F6A /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				8DDB82502966EABE0038B1EC /* AppDelegate.swift */,
 				8DDB82522966EABF0038B1EC /* SceneDelegate.swift */,
 				8DDB82562966EABF0038B1EC /* Main.storyboard */,
+				8D35EF2A29CB01C80059198F /* DetailViewModel.swift */,
 				8DDB82592966EAC00038B1EC /* Assets.xcassets */,
 				8DDB825B2966EAC00038B1EC /* LaunchScreen.storyboard */,
 				8DDB825E2966EAC00038B1EC /* Info.plist */,
@@ -181,6 +184,7 @@
 				8DDB82512966EABE0038B1EC /* AppDelegate.swift in Sources */,
 				8D363AC7296802E500638F6A /* CheckdTableViewCell.swift in Sources */,
 				8DDB82532966EABF0038B1EC /* SceneDelegate.swift in Sources */,
+				8D35EF2B29CB01C80059198F /* DetailViewModel.swift in Sources */,
 				8DDB826B2967C7910038B1EC /* Info.swift in Sources */,
 				8DDB82652966EB460038B1EC /* ListViewController.swift in Sources */,
 				8D363ACB29681CDD00638F6A /* EditViewController.swift in Sources */,

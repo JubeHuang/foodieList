@@ -62,13 +62,10 @@ class EditViewController: UIViewController {
             let imageUrl = Info.documentDirectoryChecked.appendingPathComponent(imageName!).appendingPathExtension("jpg")
             try? imageData?.write(to: imageUrl)
             newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName!, comment: comment, checked: true)
-            //delegate?.editViewControllerDelegate(self, didEditRestaurant: newRestaurant!)
         } else if comment != "有什麼想法呢..." {
             newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName ?? "", comment: comment, checked: true)
-            //delegate?.editViewControllerDelegate(self, didEditRestaurant: newRestaurant!)
         } else {
             newRestaurant = Info(name: name, address: address, phone: phone, googleLink: URL(string: url), caption: caption, imageName: imageName ?? "", comment: comment, checked: false)
-            //delegate?.editViewControllerDelegate(self, didEditRestaurant: newRestaurant!)
         }
         delegate?.editViewControllerDelegate(self, didEditRestaurant: newRestaurant!)
         navigationController?.popViewController(animated: true)
